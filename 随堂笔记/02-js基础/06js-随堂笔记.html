@@ -1,0 +1,217 @@
+一,内置对象
+    参考文档:
+      1,火狐MDN
+      2,w3school
+二,Math对象
+//属性
+    1, Math.PI            π
+//方法
+    2, Math.max      求最大值
+    结构:    Math.max(umb1,umb2,umb3,...)       
+    3, Math.min      求最小值/同max方法
+//取整
+    4, Math.ceil      向上取整 
+      结构:eg: 
+      Math.ceil(1.1); //2
+      Math.ceil(1.9); //2
+      Math.ceil(-1.1); //-1
+      Math.ceil(-1.9); //-1
+    5, Math.floor     向下取整
+    结构:eg: 
+      Math.floor(1.1); //1
+      Math.floor(1.9); //1
+      Math.floor(-1.1); //-2
+      Math.floor(-1.9); //-2
+    6, Math.round     附近取整  四舍五入
+    小数点后面的位,如果 >5 附近取整; <5 附近取整,直接舍弃
+    .5  往值大的取
+    结构:eg: 
+      Math.round(1.1); //1
+      Math.round(1.9); //2
+      Math.round(1.5); //2
+      Math.round(-1.1); //-1
+      Math.round(-1.9); //-2
+      Math.round(-1.5); //-1
+    7, Math.random     随机数  默认取0-1的随机数,包括0不包括1[0,1)
+      eg: 
+      Math.random()        默认[0,1)
+      Math.random()*3       [0,3)
+      随机整数
+      [0,3]   0-3之间的整数0-3   先[0,4),再向下取整,或者parseInt解析成整数
+      eg:    parseInt(Math.random()*4)    解析成整数
+             Math.floor(Math.random()*4)   向下取整 
+       [2,8]   [0,6]+2
+       eg:   parseInt(Math.random()*7) + 2
+    8, Math.abs      absolute绝对,绝对值 
+    9, Math.pow(a,b)    a的b次方      
+    10, Math.sqrt       开方
+三,Date对象
+1,当前时间:
+    结构:
+       new Date();
+    格式化时间:
+    date.toLocaleString();    //日期和时间
+    date.toLocaleDateString();    //日期
+    date.toLocaleTimeString();    //时间
+2,指定时间
+    结构:
+    new Date('2017-03-04');  //创建指定日期
+    new Date('2017-03-04  00:53:45');  //创建指定日期及时间
+    new Date(2017,3,22,0,52,34);   //创建指定日期,3显示的4月的,月份是从0开始,0为第一个月
+    new Date(782242424);   //参数毫秒
+    年:
+    date.getFullYear();
+    月  0-11
+    date.getMonth();
+    日
+    date.getDate();
+    星期几  0星期日,1-6正常
+    date.getDay();
+    小时
+    date.getHours();
+    分钟
+    date.getMinutes();
+    秒
+    date.getSeconds();
+3,时间戳
+是毫秒数,1970年01月01日0时0分0秒,到现在的总毫秒数
+var date = +new Date();
+引申:求取倒计时的时候 
+      1,先获取两个时间戳 
+      2,相减
+      3,/60/60/24拿到天数
+      4,不足24小时,不足一天的,%24
+      5,不足一分钟的,%60
+      6,不足60s的,%60
+四,Array对象
+数组的方法:
+    1,join(分隔符)    
+      作用将数组的值拼接成字符串,并且返回字符串
+      分隔符空着,不写,默认是',';常用'';'-'
+      结构:
+      数组名.join('-')   将数组之间加上'-'并返回一个字符串至数组
+    2,增删操作
+    shift  unshift   push  pop
+        2,1   数组名.push('值1','值2',...)
+        元素后面追加元素
+        返回值是数组的长度
+        eg:   var arr = [a,b]
+              var res = arr.push(a)
+              console.log(res)   => 长度:3
+        2,2   数组名.pop()
+        元素后面删除一个元素,没有参数
+        返回值是删除的元素
+        eg:   var arr = [a,b]
+              var res = arr.pop()
+              console.log(res)   => 删除的元素:b   
+        2,3   数组名.unshift()
+        元素前面追加元素
+        返回值是数组的长度
+        2,4   数组名.shift()
+        元素前面删除一个元素,没有参数
+        返回值是删除的元素
+    总结:(用电脑键盘记忆)
+    1)push和pop  =>p 在右边  数组的后面
+    2)unshift和shift  =>shift 在左边  数组的前面
+    3)push  推入增加,pop弹出,减少
+    4)unshift和shift比较,unshift多了一个un就是增加,shift就是减少
+    5)增加元素,返回的是长度;删除元素,返回的是删除的元素
+  3,数组的翻转和排序
+    3,1   reverse 翻转
+     结构:   数组名.reverse()
+    3,2   sort  排序
+        结构:  数组名.sort()
+        不写参数默认是根据首字母/首字符排序
+        参数:
+        数组名.sort(function(形参1,形参2){
+          //return后面一定返回为真
+          //如果形参1>形参2,那么交换位置
+          return 形参1-形参2;  //从小到大排序
+          return 形参2-形参3;  //从大到小排序
+        })
+  4,拼接与截取
+    4,1   concat   拼接与截取
+    把两个数组拼接到一起
+    结构:数组名1.concat(数组名2);    =>形成效果是数组1的+数组2的
+    4,2截取
+     slice()和splice() 
+    (1) slice()截取出来
+        有返回值
+        没有参数:      slice()          就是全部截取
+        有参数:  slice(star,end)   star开始,end结束 (包括star,不包括end)
+        有参数:  slice(star)      从star开始,到结束
+    (2)splice()删除或添加
+      没有返回值
+      有参数:   splice(star,deletecount)    从star开始,删除deletecount个数
+      有参数:   splice(star,deletecount,item)    从star开始,删除deletecount个数,item是添加的元素
+      特殊:    splice(star,0,item)  从star开始,不删除,直接添加,添加的位置是star的位置
+  5,查找
+  indexOf(元素)  元素第一次出现的位置
+  lastIndexOf(元素)   元素最后一次出现的位置
+  返回值:下标
+引申:  对象获取全部属性名
+结构:    Object.keys(对象名);
+练习题:数组去重   法1 用对象名:值++的方法;法2 双重for循环,新数组和老数组比较,用flage=true标记法
+
+
+五,基本包装类型
+1,基本数据类型没有属性和方法,js把基本数据类型包装成复杂数据类型
+    引用类型:String/Number/Boolean
+    发生了3件事情:
+    1)把简单类型换成复杂类型
+    2)再用复杂数据类型调取方法: var index = 复杂类型(str(基本数据类型)).indexOf('a');
+    3)拿到这个index后,再把复杂数据类型销毁
+2,Number对象
+    2,1    toFixed(参数)
+    小数点后保留几位有效数字,参数即为几位
+    2,2
+3,String对象
+   字符串可以看成一个字符串数组(伪数组),大部分参考数组的属性和方法
+    操作字符串的方法,都不会改变原来的字符串,所以需要返回
+    3,1 查找指定字符串  
+    结构:
+    字符串名.indexOf(元素)    查找元素第一次出现的位置 
+    字符串名.lastIndexOf(元素)   查找元素最后一次出现的位置
+    3,2 去除空白 
+    结构:  
+    字符串名.trim()去除两端的空白
+    3,3 大小写转换
+    结构:
+    字符串名.toUpperCase();   全部转换成大写
+    字符串名.toLowerCase();   全部转换成小写
+    3,4拼接
+    结构:
+    字符串名1.concat(字符串名2)
+    字符串名1+字符串名2
+    3,5截取
+    slice==substring
+    结构:
+    字符串名.slice(star,end)   star开始,end结束,包括star,不包括end
+    substr和数组里的splice很像
+    结构:
+    字符串名.substr(star,length) star开始,截取length个
+    3,6切割
+    split 字符串转化为数组, 和数组的join相反
+    结构:
+    字符串名.split('-')    按'-'来切割
+    3,7替换 
+    replace
+    结构:
+    字符串名.replace(old,new)   old旧内容,new新内容,默认值换第一个
+    字符串名.replace(/old/g,new)   /old/g   正则,g是全局
+    eg: 
+    '1-2-3'  转换成'123'
+    字符串名.replace(/-/g,'')
+    eg:
+    '1 2 3'  转换成'123'
+    字符串名.replace(/ /g,'')
+    3,8遍历
+    同数组遍历,用for循环
+    3,9获取元素
+    结构:
+    字符串名[下标]
+    字符串名.charAt(下标)
+
+
+
+

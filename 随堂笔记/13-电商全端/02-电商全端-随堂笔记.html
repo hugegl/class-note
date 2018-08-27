@@ -1,0 +1,158 @@
+一,电商全端
+1,echarts插件使用
+    1)版本
+      常用完整版  echarts.min.js
+      常用版  echarts.common.min.js;只有柱状图和饼状图
+      精简版  echarts.smiple.min.js
+    2)使用步骤
+      (1)引包
+      (2)准备一个具有宽高的容器;//必须指定,后台获取数据需要时间,如果没有宽高,图片可能渲染不出来;
+      (3)写js代码
+      -------------柱状图------------------
+      // 基于准备好的dom，初始化echarts实例
+      var myChart = echarts.init(document.getElementById('people')); 
+      // 指定图表的配置项和数据
+      var option = {
+        //标题文本
+          title: {
+              text: '2017年注册人数'
+          },
+          //提示框组件
+          tooltip: {},
+          //图例,里面的data需要和series里面的name一一对应;
+          legend: {
+              data:['销量']
+          },
+          //x轴刻度
+          xAxis: {
+              data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
+          },
+          //y轴刻度,一般不设置,根据数据动态生成
+          yAxis: {},
+          //数据项列表
+          series: [{
+              name: '销量',
+              type: 'bar', //bar柱状图,pie饼图,line折线图
+              data: [5, 20, 36, 10, 10, 20]
+          }]
+      };
+    
+      // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+    -------------饼图------------------
+    pieOption = {
+      //大标题
+      title : {
+          text: '某站点用户访问来源',
+          subtext: '纯属虚构',//副标题
+          x:'center'//控制标题的位置居中
+      },
+      //提示框组件;
+      tooltip : {
+          trigger: 'item',//移到表项上的时候触发;axis坐标轴的范围内触发;可参考官网配置项文档;
+          formatter: "{a} <br/>{b} : {c} ({d}%)",//配置提示信息;{a}系列名称/{b}数据项名称/{c}数值/{d}百分比;详细参数参考官网配置项文档
+      },
+      /图例
+      legend: {
+          orient: 'vertical',//指定图例显示方向;horizontal水平显示
+          left: 'left',//居左
+          data: ['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
+      },
+      series : [
+          {
+              name: '访问来源',
+              type: 'pie',
+              radius : '55%',//圆的大小,圆直径所占比例
+              center: ['50%', '60%'],//圆心的坐标位置
+              data:[
+                  {value:335, name:'直接访问'},
+                  {value:310, name:'邮件营销'},
+                  {value:234, name:'联盟广告'},
+                  {value:135, name:'视频广告'},
+                  {value:1548, name:'搜索引擎'}
+              ],
+              //可以添加阴影效果
+              itemStyle: {
+                  emphasis: {
+                      shadowBlur: 10,//阴影大小
+                      shadowOffsetX: 0,//阴影偏离位置
+                      shadowColor: 'rgba(0, 0, 0, 0.5)'//阴影颜色
+                  }
+              }
+          }
+      ]
+  };
+2,bootstrap框架
+  1)为任意的table标签,添加一个table类,会有基本的样式;也有其他样式,可以在官网中查看api;
+3,bootstrap-paginator插件  分页插件
+  1)依赖于bootstrap;根据bootstrap版本不同使用的分页容器也不同;//详细看参考文档
+        2.X的用div作为容器;
+        3.X的用ul作为容器;
+  2)初始化
+      $('分页器元素').bootstrapPaginator({     
+          bootstrapMajorVersion:3,//指定bootstrap版本
+          totalPages:10,//指定总页数
+          currentPage:5,//指定当前页
+          //给所有的按钮添加页码点击事件
+          onPageClicked:function(event,originalEvent,type,page){
+            //event事件对象;//originalEvent原始事件对象;
+            //type当前点击的按钮;page数字页普通页码,next下一页,prev上一页,last尾页,first第一页
+            //page当前页码
+          }
+      })
+4,jQuery-File-Upload文件上传插件
+      1)引包
+        依赖于jQuery;
+        依赖于jQuery中的ui小部件;jquery.ui.widget.js;
+        跨域的根据情况来看;jquery.iframe-transport.js
+        核心插件包;jquery.fileupload.js
+      2)准备结构;准备input标签,标注必须的属性
+        需要通过插件帮我们发送文件上传请求,需要配置name和data-url接口地址
+        name 用于接收文件,须和接口文档中要求的name属性一样;
+        data-url 后台接口地址
+        multiple指定多文件上传
+      3)配置文件上传插件,进行文件上传初始化
+      $('input元素').fileupload({
+        //配置返回数据格式
+        dataType:'json',
+        //上传完成图片后,调用的回调函数
+        done:function(e,data){
+          //e是事件对象
+          //data是图片上传后的对象
+          //data.result获取响应的图片地址,是一个对象,是发送ajax后,后台响应的数据;
+          //data.result.picAddr,拿到地址;根据实际情况,打印data,和data.result查看返回内容,根据需求写;
+        }
+      })
+
+
+
+
+
+
+
+引申:
+1,cdn引入,使用人家的资源下载,减轻自己的资源使用;
+2,表格中文字水平居中用  vertical-algin:middle;
+3,navicat中;
+    找到表;右键转储sql文件;打开;
+    找到添加数据那段执行的代码,放到查询语句中,执行即可快速增加假数据;
+4,  原始的方法:  git pull 远程仓库地址 分支名;//每次使用都这样,可以配置一下,后直接用git pull;配置如下:
+    关联:   git branch --set-upstream-to=origin/远程分支名 master;
+            eg:    git branch --set-upstream-to=origin/master master
+                    //建立将本地的master和远程的master相关联;
+    然后直接git pull就可以将远程仓库中的内容直接拉取到本地仓库
+5,获取自定义属性的值
+  data('id');//jQ中封装的方法,可以获取自定义以data-开头的自定义属性的值;
+  attr('data-id');//这样也能获取自定义属性和内置属性;
+  hasClass('类名');//判断是否含有类名;有返回true,没有返回false;
+6,直接在表格tr中写width:50%;可以直接控制宽度的大小;
+7,bootstrap中如果只添加表单中的某一个按钮/input框,需要在外面套一个div,并且class="form-group"
+8,元素.trigger('事件名');//触发元素的某一个事件;
+9,label标签中的for = "id名" 与表单元素关联<input id="id名"/>;
+      eg:   <label for="inp">上传图片</label>
+            <input type="file" id="inp">
+            达到点击文字,让input获取焦点,或者被选中的效果;
+10,文件上传三大属性:查笔记
+
+
+

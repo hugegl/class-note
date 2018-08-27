@@ -1,0 +1,104 @@
+一,电商全端-乐淘网pc端
+    1,bootstrap-validator;
+        1)设置校验排除项
+            excluded:[':disabled',':hidden','not(:visible)'];//默认是不校验这些的,如果要校验隐藏项的,需要手动解除排除项;
+            手动解除:  excluded:[];//即可
+        2)手动设置隐藏域的校验状态;
+          //因为框架中默认不监听隐藏域的校验状态
+          表单元素.data('bootstrapValidator'),updateStatus('字段名称','校验状态','校验规则');//校验规则不用指定;
+        3)正则校验
+        regexp:{
+            regexp:/^[1-9]\d*$/,
+            message:'必须是非零开头的数字',
+        }
+    2,bootstrap-paginator插件
+        1)对象中的其他属性:  //详细参考使用文档
+          (1)size:'mini';//控制按钮大小;参数mini....查文档
+          (2)//每个按钮在初始化的时候都会调用一下这个函数,通过返回值进行设置文本;
+                itemTexts:function(type,page,current){          //配置按钮文本
+                    //type 标记当前按钮的类型;取值page;first;last;prev,next
+                    //page 指当前这个按钮所指向的页码;普通页码
+                    //current 当前页;标记当前高亮的是哪一个
+                }
+          (3)配置title的信息
+          //每个按钮在初始化的时候,都会调用一次这个函数,通过返回值,设置title文本
+                tooltipTitles:function(type,page,current){
+                    形参解释同:itemTexts的函数形参
+                }
+          (4)使用bootstrap的提示框组件
+            useBootstrapTooltip:true;//默认false不使用,如果要使用,改成true即可;
+    3,jQuery-File-Upload插件
+          (1)发送多张图片的时候是一张一张发送,异步发送的;用户体验好;服务器是多线程的;
+                每张图片/资源的大小不同,较小的可以先返回给浏览器,大图片可以慢慢加载,再返回,互不影响;
+    4,MUI组件库,插件//使用方法看官方api;
+      1)特点: 
+        大小160k;
+        接近原生UI;
+      2)引包
+        css包;
+      3)会直接对标签进行添加样式处理;需要手动清除;
+      4)使用框架做区域滚动,
+          (1)引入公共的框架子元素结构;
+          (2)需要给父元素指定position:relative;
+          (3)书写js代码,初始化控件;
+                结构:  
+                 mui('.mui-scroll-wrapper').scroll({
+                  deceleration:0.005,//阻尼系数,值越小越灵敏
+                    scrollX:true;//滚动方向X
+                    scrollY:true;//滚动方向Y
+                    indicators:false;//是否显示滚动条;
+                })
+      5)轮播图
+              (1)引包
+              (2)准备轮播容器
+              (3)假图需要增加类;mui-slider-loop循环播放;假图需要加额外的类mui-slider-item-duplicate;
+              (4)自动轮播等,用js控制,初始化对象
+                      结构:
+                      var gallery = mui('.mui-slider');
+                        gallery.slider({
+                        interval: 5000 //自动轮播周期，若为0则不自动播放，默认为0；
+                        });
+              (5)小圆点在官网上面去找文档,有个模拟手机比文档全;查看网页元素,复制下来即可;
+      6)mui-clearfix;框架内清浮动的类名;
+                双伪元素清浮动法;before是防止塌陷,真正清除浮动的是after;
+      7)mui-btn  mui-btn-primary   添加类名将按钮变成按钮样式,颜色是蓝色;
+      8)mui-ellipsis-2    添加类名控制2行溢出以...显示;
+
+
+
+
+引申:
+1,表单隐藏域   <input type="hidden">;
+2,ajax中dataType:'json';将后台返回的json字符串转成对象;
+      后台在响应头中设置了响应头content-Type: application/json;
+      jQuery中,如果不指定dataType类型,jQuery中会查看响应头中是否设置json,如果有,会按照响应头设置的json解析;
+3,函数中: arguments获取函数中所有的参数列表
+4,switch case;判断变量是否符合条件1/2/3,符合谁就执行对应代码,break跳出本次循环;
+      语法:  switch(变量){
+        case 条件1:执行代码;
+        break;
+        case 条件2:执行代码;
+        break;
+        case 条件3:执行代码;
+        break;
+      }
+5,input的type值为file的图片上传框,增加一个属性multiple即可以上传多张图片;
+6,jQuery中append在最后面追加,prepend在最前面追加;
+  $('父元素').prepend('子元素');在父元素的子元素的最前面追加指定子元素;
+7,数组.pop();移除数组中最后一个元素;
+8,jQuery中eq(num);如果num是正值,则从前面开始找(0算起);如果是负值,从最后一个元素开始倒数(1算起)
+9,jQuery中删除元素自己
+      元素.remove();
+10,正则:         /正则表达式/
+      +   出现一次或多次
+      \d  数字0-9
+      [1-9]  可以出现的范围,1~9之间的数字
+      *    出现0次或多次
+      ?     0次或1次
+      {num}   出现num次
+正则表达式.test('需要校验的内容');符合返回true/否则返回false;
+11,布局的时候,如果使用rem布局,不建议和着ui框架一起,不方便使用,所以建议用流式布局与框架结合;rem需要全部自己写比较好;
+12,低版本的ios系统对position:fixed;
+13,对定位的元素,如果设置了宽高,指定top:0;bottom:0;top起作用;right:0;left:0;left起作用;
+    对定位的元素,如果没有设置宽高,指定top:0;bottom:0;会将盒子拉伸高度至和父盒子一样大;right:0;left:0;拉伸宽度至和父盒子一样大;
+14,transform如果设置3d属性,会开启gpu硬件加速,可以让手机以最高的性能进行渲染该元素;//gpu是图形处理器;

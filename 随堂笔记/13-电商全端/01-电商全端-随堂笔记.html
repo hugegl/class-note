@@ -1,0 +1,151 @@
+一,复习
+1,github-pages
+    1)仓库名:   用户名.github.io;//必须这么命名
+        提交上去的东西;可以通过域名访问;域名地址为仓库名的名字
+----------------------------------今日内容----------------------------------------------------
+一,启动node.js //真个过程服务器都是开启状态;
+    1,启动服务器:   按住shift键,右键,打开powershell矿口;输入npm start;启动node.js
+    2,将sql文件导入到mysql中,重新启动服务器;
+    3,在浏览器地址栏内输入:
+          localhost:3000/manage    ;//这个是3000端口,必须写,如果不写就默认是80端口;//写完端口后要给个地址,不然是404报错;//访问地址是文件中public中的文件;
+            manage是用户管理系统;
+            mobile是手机端的页面;
+二,两种开发模式
+    1,前后端分离;
+    2,后端渲染前端页面;
+三,环境搭建
+    1,安装node
+    2,node => js => ????查看视频,配置后台访问地址,密码等;
+四,新建项目用git进行管理;
+    1,  git init ; git add . ; git commit -m '添加说明';//本地的工作区,暂存区和仓库区;
+    2,  在github网上新建关于乐淘的远程仓库(注意,本地初始化了,此处新建仓库不用初始化);
+    3,  git remote add origin 远程仓库地址;//定义变量之后才能使用变量名origin;origin 是规范的名字;其他名字也可以,但是不规范;
+    4,  git push -u origin master;//master是分支名;//-u是将本地仓库与远程仓库关联起来,以后再提交就可以直接执行git push就可以了;
+    5,   git远程仓库中如果本地有read me文件,就可以直接预览;
+五,开始编写项目
+    1,表单校验插件
+        bootstrap-validator;
+        注意:依赖于bootstrap的;
+        1)引入css和js文件;
+        2)编写js文件;插件文档中有详细api,介绍怎么写
+            表单元素.bootstrapValidator({
+                //设置排除项
+                excluded:[':disabled',':hidden','not(:visible)'];//默认是不校验这些的,如果要校验隐藏项的,需要手动解除排除项;
+                //配置校验图标
+                feedbackIcons:{
+                    //内容从api中复制即可;字体图标是bootstrap中的字体图标,起提示功能;
+                    valid:'字体图标',//校验成功
+                    invalid:'字体图标',//校验失败
+                    validating:'字体图标',//校验中
+                }
+                //配置字段;配置的字段和input框中指定的name相关联,所以必须要给input加上name
+                fields:{
+                    username:{
+                        //配置校验规则
+                        validators:{
+                            //非空
+                            notEmpty:{
+                                //提示信息
+                                message:'用户名不能为空',
+                            },
+                            //长度校验
+                            stringLength:{
+                                min:2,
+                                max:6,
+                                message:'用户名长度必须在2-6位',
+                            },
+                            //配置失败后的提示信息;固定是callback
+                            callback:{
+                                message:'用户名不存在',
+                            }
+                            //正则校验
+                            regexp:{
+                                regexp:/^[1-9]\d*$/,
+                                message:'必须是非零开头的数字',
+                            }
+                        }
+                    }
+                    password:{
+                        //非空,长度同username
+                    }
+                }
+            })
+        3)表单校验成功事件   success.form.bv
+            书写结构:    表单元素.on('success.form.bv',事件处理函数)
+            success.form.bv;表单校验成功后会触发这个事件;因为这个插件必须配合submint提交按钮;
+            如果校验成功,默认就提交表单,会发生页面跳转;所以需要监听表单校验成功事件,如果校验成功,需要我们手动阻止默认的提交,改用ajax进行发送请求;
+            如果校验失败,提示用户即可;
+        4)创建实例对象
+            var 变量名 =  $('form表单').data('bootstrapValidator') ;//实例化插件对象;通过实例对象调取原型的方法;
+        5)常用方法    书写结构:     实例对象.方法名(参数);
+            (1)resetForm(参数) ;//重置表单;参数是boolen值
+                不传参,只重置校验状态,不重置里面的内容;//默认值
+                传true,重置校验状态,和文本内容;
+            (2)updateStatus('参数1','参数2',参数3);//更新校验状态
+                参数1:字段名称;//需要修改校验状态的字段的名称
+                参数2:校验状态;'INVALID'//失败;'VALID'//成功;'NOT_VALIDATED'//未校验的;
+                参数3:校验规则的名称;//校验状态触发后需要触发的校验规则名称;
+                    //用于指定提示文本,需要在校验规则那里重新配置;callback//固定的名字;如果为空,为所有的校验结果更新结果
+    2,NProgress.js 插件
+    书写结构:NProgress.方法名;
+            方法: 
+            (1)start();//开启
+            (2)set(0.4);//一开始就到0.4
+            (1)inc();//一点点开始
+            (1)done();//到不了终点,需要调用这个才会到终点;
+    3,location.href;返回值是当前页面的地址;//字符串形式
+            字符串.indexOf('查询的字符串');//如果有则返回字符串的的下标;如果没有就返回-1;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+引申:
+1,git中有个LF will be replaced by CRLF in package-lock.json   将Linux解析成windows的界面管理,不用管;
+2,bootstrap中的.row是用来抵消外面的padding的;
+3,bootstrap中的情景色primary;蓝色;
+4,全角状态下,一个空格占一个字符;
+5,jQuery中的ajax事件
+书写结构:   $(document).事件名(事件处理函数);
+eg:      $(document).ajaxStart(function(){执行代码})
+            1)ajaxComplete()   当每个ajax完成的时候,触发此事件(不管成功还是失败都调用)
+            2)ajaxError()      当每个ajax请求失败的时候调用;
+            3)ajaxSuccess()    当每个ajax请求成功的时候调用;
+            4)ajaxSend()       当每个ajax请求发送前调用;
+            5)ajaxStart()      当整个页面中第一个ajax请求发送的时候调用;
+            6)ajaxStop()      当整个页面中所有ajax请求都完成的时候调用;
+6,bootstrap中模态框组件中的方法
+$('模态框元素').modal('参数');
+参数:   show;//显示
+        hide;//隐藏
+class类名: data-diamiss='...';关闭模态框
+            模态框尺寸;默认是中;modal-dialog modal-lg;//大模态框;将modal-lg改成modal-sm即可;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,50 @@
+一,命令
+1,cd  改变目录
+      1,改变路径                cd
+      2,改变路径                cd ~/路径名
+      3,回到上一级目录           cd .. 
+      4,打印当前目录             pwd
+      5,展示当前路径所有的文件    ls
+      6,查看文件夹               cd 文件名
+2,  tab         自动补全
+3,  pwd         打印当前路径
+4,  ls          展示当前目录列表
+5,  clear reset 清屏
+6,   mkdir      创建一个文件夹(make directory)
+7,   rmdir      删除一个空的文件夹
+8,    touch     创建一个文件夹
+9,    rm        删除一个文件获取文件夹
+10,   mv        移动文件(move)
+11,   cp        复制文件
+12,   cat       查看文件全部内容
+13,   desktop   桌面文件夹
+14,  git init     初始化仓库
+15,  git add      将文件由工作区添加到暂存区
+    git add .      将所有文件添加到暂存区
+16,  git status   查看当前暂存区内所有文件的状态,
+                   红色的,代表本地修改了,但是暂存区没有修改
+    
+17,  git commit    将文件由暂存区添加到仓库区(仓库区需要有自己的账号和邮件)
+          git commit -m      提交说明
+          git commit -a -m   快速提交最近一次提交的文件
+18,  git config  
+19,  git log            查看提交成功的日志
+20,  git log --lineone   通过一行查看日志
+21,  git config --global user.name "guoling"
+     git config --global user.email "guoling@qq.com"
+     git config --list    查看配置日志
+22,  :q!   强制退出,在本页面无法操作的时候,最后一行使用
+23,   git diff     查看工作区与暂存区的不同
+24,   git diff --cashed   查看暂存区与仓库区的不同
+25,git diff head    查看工作区与仓库区的不同，HEAD表示最新的那次提交
+26,git重置
+git reset      版本回退，将代码恢复到已经提交的某一个版本中。
+git reset --hard 版本号  代码回退到某个指定的版本(版本号只要有前几位即可)   
+git reset --soft 版本号   只回退仓库区的变化
+git rest  --mixd 版本号   只重置仓库区和暂存区
+  
+
+
+.gitignore    git忽视的文件,在仓库的根目录创建一个.gitignore的文件,文件名是固定的
+              将不需要被git管理的文件路径添加到.gitignore中
+

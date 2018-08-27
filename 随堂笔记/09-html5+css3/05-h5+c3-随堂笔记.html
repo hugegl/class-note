@@ -1,0 +1,184 @@
+------------------------------------------复习-----------------------------------
+一,flex布局
+1,给父盒子设置display:flex;就拥有了主轴和侧轴;
+2,给父盒子设置的属性
+	控制主轴方向	flex-direction:row/column;
+	控制主轴方向对齐方式	justify-content:flex-start;flex-end;center;space-between;space-around;
+	控制侧轴单行对齐方式	algin-items:flex-start;flex-end;center;stretch;
+	换行	flex-wrap:wrap换行/no-wrap不换行,默认值;
+	控制侧轴多行对齐方式	algin-content:flex-start;flex-end;center;space-between;space-around;stretch;
+3,给子盒子设置的属性
+	分配父盒子剩余的空间	flex:数字;
+	排序,数字越小越靠前	order:数字;
+	设置自己在侧轴的对齐方式	align-self:参数和父盒子对齐方式一样;
+---------------------------------------------------------今日内容------------------------------------------------
+一,H5语义化标签兼容问题
+	1,新增的标签:header;footer;aside;nav;section;
+	2,IE8以下的版本,不支持语义化标签;
+		解决方法:
+			1)在浏览器解析之前,动态创建一个header标签;单个解决;
+			2)动态创建的元素是行内元素,不能设置宽高的,需要在css中,转成块级;
+				document.createElement('header');
+			3)html5shiv解决语义化标签兼容性问题;整批解决;引入插件需在页面解析之前;
+				插件原理:也是动态创建元素,让浏览器认识;默认创建出来的是行内,进行样式重置,转成块级;
+	3,条件注释:
+	注意:需要添加注释,ie9-的版本才认识,ie9+以上的版本会当成普通注释,不执行;
+				结构:<!--[if lte IE 8]>
+						script引的包
+					<![endif]-->
+				判断句:lte 小于等于;gte 大于等于;lt 小于;gt 大于;
+						大于ie8,只有ie9认识,ie10及其以上会当成普通注释
+二,H5新增
+	原生操作类名很麻烦,字符串拼接;
+	1,对象classList方法
+		1)添加类  DOM元素.classList.add('类名')
+		2)移除类  DOM元素.classList.remove('类名')
+		3)判断类  DOM元素.classList.contains('类名');有就返回true;没有就返回false;
+		4)切换类  DOM元素.classList.toggle('类名');有就移除,没有就追加;
+	2,操作自定义属性名,对象dataset方法
+	早期是用getAttribute/setAttribute;
+		1)获取元素所有data-开始的自定义属性
+			DOM元素.dataset;返回这个元素的data-开头的自定义属性集合的对象;
+			DOM元素.dataset.属性名;属性名直接写,不用data-;
+			DOM元素.dataset['属性名'];
+		2)修改
+			DOM元素.dataset.属性名 = 属性值;
+		3)添加
+			DOM元素.dataset.新属性名 = 新属性值;//会直接追加在后面,属性名不用写data-;
+		注意:(1)存的时候,自定义属性以data-开头;
+			(2)获取,通过DOM元素.dataset可以得到一个对象,包含了所有自定义属性键值对;
+			(3)设置或者添加,直接操作DOM元素.dataset对象即可;
+	3,判断网络状态的api;对象navigator的方法
+		1)navigator.onLine返回用户当前的网络状态,返回布尔值;
+			true:联了局域网/互联网;
+			false:未联网,离线了;
+		2)两个事件,只能用addEventListener注册事件;
+			online;当用户切换到联网状态时触发;
+			offline;当用户切换到离线状态时触发;
+	4,地理位置
+		基于位置服务;LBS
+		1)隐私:必须先通过用户的许可,才能获取用户的位置信息;
+		2)相关方法:
+		可以尝试获取用户位置:
+			navigator.geolocation.getCurrentPosition(参数1,参数2)
+		如果成功会调用成功的回调函数;失败就调用失败的回调函数;
+		参数1:success;成功的回调函数,成功会调用成功函数,可以得到一个location对象;//此对象是函数的形参,可以用任意变量接收;
+		此对象中包括:
+			(1)对象.coords.longitude;//经度//获取的是google的坐标;
+			(2)对象.coords.latitude;//纬度
+			(3)对象.coords.accuracy;//精确度,值越小越精确
+			(4)对象.coords.altitude;//海拔
+		参数2:error;失败的回调函数;失败会调用失败的回调函数,可以得到一个error对象;//此对象是函数的形参,可以用任意变量接收;
+		PC端:chrome,火狐为了安全,做了限制,必须网站是https安全协议才允许获取位置;调试的时候可以使用IE,不影响将来工作使用;
+		案例:百度地图,地图展示详解;观看百度地图官方api;百度地图开放平台;
+			注意:(1)不知道地位在哪儿了;引入point指示图标,标明当前坐标的位置;
+				(2)偏差太离谱;将google坐标转换成百度坐标;
+三,web存储,浏览器端存储数据的容器
+		1,cookie
+			特点: 	1)大小4k
+					2)生命周期,默认是会话级别,可以设置过期时间;
+					3)在同一个网站,多个页面可以共享;
+					4)请求时会将cookie中的数据进行携带;
+			缺点:大小4k,操作起来非常麻烦;
+			应用:会话保持;
+		2,因为cookie存储空间太小,新出了 localStorage和sessionStorage;
+			专门用于web存储,大小5M,操作起来非常方便
+		4,sessionStorage的特点,鸡肋(了解)
+			1)生命周期,一关闭浏览器就销毁
+			2)不能在多个窗口下共享数据
+			3)大小5M;
+			4)请求时不会携带;
+		常用操作方法:
+			1)设置   sessionStorage.setItem('键','值');
+			2)获取   sessionStorage.getItem('键');返回值是对应的值;
+			3)删除单个 sessionStorage.removeItem('键');
+			4)清空 sessionStorage.clear();清空所有;
+		5,localStorage(重点,常用)
+		本地存储对象localStorage的方法,存储在硬盘中;
+		以键值对的形式存储;让数据持久化存储
+		特点:
+			1)永久存储,只要不手动删除
+			2)在同一个网站,可以在多个窗口共享数据
+			3)大小5M;
+			4)请求时不会携带;
+		常用方法:
+			1)设置    localStorage.setItem('键','值');
+			2)获取    localStorage.getItem('键');返回值是对应的值
+			3)删除单个 localStorage.removeItem('键')
+			4)清空 localStorage.clear();清空所有;
+四,视频播放器
+	1,font-awesome使用
+		步骤:引包;添加类:添加fa和具体哪个字体图标类;
+	2,video缩放的时候默认是等比例缩放的;
+	3,input type='range';滑块表单控件;设置value值可以控制滑块初始的位置;
+	4,视频播放的常用api
+	通过视频元素调用;语法    视频元素.方法();
+		1)加载视频load();默认是加载的;
+		2)播放视频play()
+		3)暂停视频pause()
+		4)全屏功能,兼容性较强,需要加前缀;
+		webstorm使用的是虚拟服务器,在加载视频,切换进度会有bug,这个是webstorm的问题;
+			viedo可以调用,其他元素也可以;
+			元素.RequestFullScreen()
+			webkit私有前缀:
+			元素.webkitRequestFullScreen();
+			火狐:
+			元素.mozRequestFullScreen();
+			IE不兼容:
+		兼容写法:
+		if(元素.RequestFullScreen){
+			元素.RequestFullScreen();
+		}else if(元素.webkitRequestFullScreen){
+			元素.webkitRequestFullScreen();
+		}else if(元素.mozRequestFullScreen){
+			元素.mozRequestFullScreen();
+		}
+		5)当前目标播放进度发生更改了,触发事件timeupdate;
+		6)当前播放的时间currentTime;返回值是当前播放的时间,单位秒数;
+			读取: 元素.currentTime;
+			赋值:元素.currentTime = 值;
+		7)当前视频的总时长duration;返回值是总时间,单位秒数;
+		8)音量设置 volume;
+			设置: 元素.volume = 值;//可以设置音量大小;
+			值:0.2;将音量设置成20%;
+五,纯前端文件预览;
+利用读取器读取:
+	1,获取文件对象;//单个input的file上传文件框;
+		inputfile元素.files[0];
+	2,创建一个读取器
+		var 变量名 = new FileReader();//不写()也可以;
+	3,这个读取器的常用方法:
+		readText();以文本的方式读取文件
+		readAsDataURL(参数);参数要求传文件对象;
+	4,读取需要时间,所以要监听读取的过程,读取成功后调用函数;
+	读取器对象.onload = function(){
+		读取器对象.result;返回读取的结果是base64进制的字符串,是文件的路径;
+	}
+利用URL对象读取
+	1,URL.createObjectURL(文件对象);返回的值是文件对象的路径;
+六,拖拽
+拖拽元素:当前正在拖拽的元素;
+给元素添加draggable就可以设置元素是否允许拖拽;
+	1,draggable:true/false;拖拽的是灵魂,不是肉体;
+	书写结构:  draggable="true";
+img和a标签,默认draggable:true;默认可拖拽;
+注册给目标元素的事件: 	drop;当拖拽元素在目标元素上,同时鼠标松开时触发;
+						dragover;当拖拽元素在目标元素上时触发;
+浏览器默认禁用了拖拽,需要阻止浏览器默认行为;
+	事件对象.preventDefault();
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

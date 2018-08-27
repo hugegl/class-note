@@ -1,0 +1,179 @@
+一,电商全端项目
+动态渲染的动画及按钮功能等,需要手动初始化;
+  1,mui 下拉刷新和上拉加载
+  //方法都可以在官网文档,或者打印原型查看;
+  mui('拖动的容器').pullRefresh();返回值是实例下拉刷新的对象,可打印查看原型上的方法;
+    //初始化,开启下拉刷新和上拉加载
+      mui.init({
+        //配置pullRefresh
+        pullRefresh : {
+          container:"拖动的容器",//下拉刷新容器标识，querySelector能定位的css选择器均可，比如：id、.class等
+          down:{
+              height:50,//可选,默认50.触发下拉刷新拖动距离,
+              auto: true,//可选,默认false.首次加载自动下拉刷新一次
+              contentdown : "下拉可以刷新",//可选，在下拉可刷新状态时，下拉刷新控件上显示的标题内容
+              contentover : "释放立即刷新",//可选，在释放可刷新状态时，下拉刷新控件上显示的标题内容
+              contentrefresh : "正在刷新...",//可选，正在刷新状态时，下拉刷新控件上显示的标题内容
+              callback :函数体 //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数;
+          },
+          //上拉加载;
+          up:{
+            auto: true //可选,默认false.首次加载自动上拉加载一次
+            callback:回调函数;
+          }
+        }
+      });
+
+      //ajax回来之后,需要结束下拉刷新,让内容回滚顶部,关闭动画
+      //api做了更新,mui文档未实时更新endPulldown();//容器与上面刷新容器一致;
+      //要使用原型上的endPulldownToRefresh()方法来结束下拉刷新
+      mui('拖动的容器').pullRefresh().endPulldownToRefresh();
+      
+      
+      
+        //结束上拉加载
+      mui('拖动的容器').pullRefresh().endPullupToRefresh(参数);
+        //参数
+        //true没有更多数据了,显示没有更多数据的提示语;且自动禁用了上拉加载disablePullupToRefresh(),防止发送无效的ajax;
+              //重新启用上拉加载,可调用方法:enablePullupToRefresh();
+                                          eg:mui('拖动的容器').pullRefresh().enablePullupToRefresh();
+        //false还有更多数据,需要继续加载;
+        重置上拉加载
+        mui('拖动的容器').pullRefresh().refresh(true);
+    2,触发一次下拉刷新
+      mui('拖动的容器').pullRefresh().pulldownLoading();//执行下拉刷新;
+      //a链接的click事件默认被禁用;mui认为在上拉刷新和下拉加载本身比较耗性能,如果用click会有300ms延迟,所以禁用了默认的a标签的click事件,需要通过tap事件绑定;
+二,数字输入框
+      1)准备html结构;
+          <div class="mui-numbox">
+            <!-- "-"按钮，点击可减小当前数值 -->
+            <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+            <input class="mui-numbox-input" type="number" />
+            <!-- "+"按钮，点击可增大当前数值 -->
+            <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+          </div>
+      2)可以设置最大值最小值,每次点击的步数;//通过类名控制
+          可通过data-numbox*自定义属性设置数字输入框的参数,如下:
+          data-numbox-min ="数字"  输入框允许使用的最小值,默认无限制
+          data-numbox-max ="数字"  输入框允许使用的最大值,默认无限制
+          data-numbox-step="数字"  每次点击“+”、“-”按钮变化的步长，默认步长为1
+三,轮播图初始化的js代码
+            //获得slider插件对象
+            var gallery = mui('.mui-slider');
+            gallery.slider({
+              interval:5000//自动轮播周期，若为0则不自动播放，默认为0；
+            });
+四,数字框,初始化js代码
+            mui('容器').numbox();
+五,模板引擎语法:
+            标准语法:   {{   }}
+            原生语法:   <%   %>;原生语法中可以嵌套标准语法;
+                  官网地址:https://aui.github.io/art-template.com
+            原生语法中可以写js代码,可以用//写注释;
+            直接输出:     <%=可以直接输出的内容%>;
+六,列表组件
+1,右侧带箭头的列表
+      1)html结构
+      <ul class="mui-table-view">
+        <li class="mui-table-view-cell">
+            <a class="mui-navigate-right">Item 1</a>
+        </li>
+        <li class="mui-table-view-cell">
+            <a class="mui-navigate-right">Item 2</a>
+        </li>
+        <li class="mui-table-view-cell">
+            <a class="mui-navigate-right">Item 3</a>
+        </li>
+      </ul>
+2,图文列表
+      1)html结构
+      <li class="mui-table-view-cell mui-media">
+        <a href="javascript:;">
+            <img class="mui-media-object mui-pull-left" src="../images/shuijiao.jpg">
+            <div class="mui-media-body">
+                幸福
+                <p class='mui-ellipsis'>能和心爱的人一起睡觉，是件幸福的事情；可是，打呼噜怎么办？</p>
+            </div>
+        </a>
+       </li>
+3,滑动触发列表菜单,在mui的手机列表页有;
+<ul class="mui-table-view" id="OA_task_2">
+    <li class="mui-table-view-cell mui-transitioning">
+      <div class="mui-slider-right mui-disabled">
+        <a class="mui-btn mui-btn-grey mui-icon mui-icon-person" style="transform: translate(0px, 0px);"></a>
+        <a class="mui-btn mui-btn-yellow mui-icon mui-icon-phone" style="transform: translate(-90px, 0px);"></a>
+        <a class="mui-btn mui-btn-red mui-icon mui-icon-email" style="transform: translate(-180px, 0px);"></a>
+      </div>
+      <div class="mui-slider-handle" style="transform: translate(0px, 0px);">
+        <div class="mui-table-cell">
+          左滑显示多功能菜单
+        </div>
+      </div>
+    </li>
+    <li class="mui-table-view-cell">
+      <div class="mui-slider-left mui-disabled">
+        <a class="mui-btn mui-btn-red mui-icon mui-icon-email"></a>
+        <a class="mui-btn mui-btn-yellow mui-icon mui-icon-phone"></a>
+        <a class="mui-btn mui-btn-grey mui-icon mui-icon-person"></a>
+      </div>
+      <div class="mui-slider-handle">
+        右滑显示多功能菜单
+      </div>
+    </li>
+    <li class="mui-table-view-cell">
+      <div class="mui-slider-left mui-disabled">
+        <a class="mui-btn mui-btn-red mui-icon mui-icon-email"></a>
+        <a class="mui-btn mui-btn-yellow mui-icon mui-icon-phone"></a>
+        <a class="mui-btn mui-btn-grey mui-icon mui-icon-person"></a>
+      </div>
+      <div class="mui-slider-right mui-disabled">
+        <a class="mui-btn mui-btn-grey mui-icon mui-icon-person"></a>
+        <a class="mui-btn mui-btn-yellow mui-icon mui-icon-phone"></a>
+        <a class="mui-btn mui-btn-red mui-icon mui-icon-email"></a>
+      </div>
+      <div class="mui-slider-handle">
+        左右滑动均可显示多功能菜单
+      </div>
+    </li>
+  </ul>
+
+
+
+
+
+
+引申:
+1,mui可以适配两个端;webapp;原生app;
+2,配置下拉刷新和下拉加载注意点:
+    下拉刷新是对原有数据的覆盖,执行的是html方法;
+    上拉加载是在原有结构的基础上进行追加,执行的是append方法;
+    拿到数据后需要执行的方法是不一样的,所以通过回调函数的方式,传进去执行;//函数的形参与实参传递
+3,页面刷新;js代码;
+      location.reload();页面重新加载
+4,mui-btn-warning;类名把按钮颜色改成黄色;
+  mui中可以识别red/yellow/blue;建议使用danger/warning等有语义化
+5,location.href返回值是当前页面的地址;赋值就是跳转到赋值的地址;
+6,复习,退出原理
+    清空浏览器退出登录状态,原理是清空了cookie中的数据,相当于清空了浏览器端的sessionId;
+7,字符串.replace('元素','替换的元素');
+8,mui-btn-block;mui的类名,让button按钮转成块级元素;
+9,mui中有个类名mui-table-cell的样式默认是
+      display:table-cell;单元格样式;由内容撑开大小;
+  如果需要转块,可以手动重置;
+10,   模板引擎默认会将回车键出来的空文本节点解析成<br>,所以需要对整个字符串做整体的替换,将\n替换成'';
+       /!/g    //正则表达式,将全部字符串的!找到;\n是回车键出来的空文本节点;
+11,html的      data-自定义属性名    大小写不敏感,默认全部解析成小写;
+12,html5中的 dataset,可以一次性获取所有data设置的属性;只能DOM对象调用;
+        eg:    DOM元素.dataset;//返回值就是这个DOM元素的所有的data设置的属性;返回值是对象形式;
+13,模态框的父元素默认是body,注册事件委托的时候需要给body注册;
+
+
+
+
+
+
+
+
+
+
+

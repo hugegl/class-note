@@ -1,0 +1,183 @@
+一,复习
+1,过渡需要触发,动画吧需要触发;
+2,2D变换  transfom:属性(值);
+属性:
+	1)分别缩放x,y    scale(倍数,倍数);x和y都缩放 scale(倍数)
+	2)平移  transale(x,y)  
+		相对于自身位置进行平移;如果设置百分比,是按照自身的宽高来进行计算的
+	3)旋转  rotate(角度)
+		顺时针为正方向
+	4)斜切skew(x,y);skewX(角度)进行水平方向倾斜;skewY(角度)进行垂直方向的倾斜;
+	5)变换基准点 transform-orgin: left top;//100px 100px;
+合写注意事项:
+	多个transform会进行覆盖;
+	rotate旋转会改变坐标系,一般会将rotate放最后;
+3,3D变换
+	1)平移 translateX;translateY;translateZ;
+	2)旋转rotateX;rotateY;rotateZ;
+		旋转方向:左手定则;
+	3)perspective:1000px;只是让子元素有近大远小的透视视觉效果,不能决定盒子是否是真3D;
+	只是用来辅助布局的,有时候给用户加一种视觉效果;
+	4)transform-style:  preserve-3d;子元素在3维建模;实现3D效果必加;
+						flat;子元素在平面布局,默认值;
+--------------------------------------------------今日内容-------------------------------------
+二,监听动画是否执行完成
+	事件:transitionend,在transition动画执行完成调用,可以添加transition动画完成的事件监听;
+	html新增事件,注册必须用
+		执行动画的元素.addEventListener('transitionend',函数体)
+	注意:每个属性的变化结束都后会触发这个事件;
+三,动画
+使用动画步骤:
+1,声明动画序列
+	@kerframes 动画名称{
+		from{
+			状态1
+		}
+		to{
+			状态2
+		}
+	}
+	1)from 和to只能实现两个状态,从状态1到状态2;满足不了复杂动画的要求,相当于0%和100%;
+	2)复杂动画用百分比显示;
+	@keyframes 动画名称{
+		num%{状态1}
+		num%{状态2}
+		.....
+	}
+2,使用动画
+	animation:动画名称    动画时间(单位s)  动画次数(数字||infinite)
+	animation是一个复合属性;
+	八大分支属性:
+	1)动画名称
+		animation-name:参数;
+	2)动画持续动画时间
+		animation-duration:时间;
+		从from到to的时间;
+	3)动画次数
+		animation-iteration-count:次数;
+		特殊值:infinite;无限次;
+	4)动画效果
+		animation-timing-function:参数;
+		参数:linear ease(默认值) steps(步数);和transition的类似;
+	5)动画方向
+		animation-direction:参数;
+		参数:normal;正常,默认值,从from到to;
+			alternate;交替,从from到to,再从to到from;
+	6)动画延时
+		animation-delay:时间;
+	7)动画最终状态
+		animation-fill-mode:参数;
+		参数:forwards;停留在最终状态;
+		both和forwards状态一样;
+	8)设置动画状态
+		animation-play-state:参数;
+		参数:paused;让当前动画停止;
+	合写注意:不区分顺序,延迟时间在动画持续时间后面;
+	常用写法:animation:动画名称 动画时间 动画次数 动画方向 动画效果;
+	多组动画用,隔开;不然会覆盖;
+四,动画函数库
+1,animation.css,里面定义好了很多的动画库,可以在网站上找,然后直接使用;
+	使用动画:link引入css文件
+			1)直接用动画函数调用
+			2)通过类名使用动画;
+五,字体图标
+阿里巴巴矢量图;iconfont有使用步骤;
+	优点:本质上是字体;
+		随意放大,缩小,不会失真;
+		可以设置颜色;
+		不用像服务器发出请求;
+	原理:通过@font-face定义一个字体,并引入对应的字体文件,供用户使用;
+	使用:引包,添加类,
+字体图标库:font awesome;
+图标库使用:  1)引包
+			2)fa指定字体
+			3)指定具体哪个图标
+			4)如果要修改大小,需要加自己的类名,不能用标签选择器控制;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+案例知识点:
+1,transalte3d(x,y,z);移动参数合写;
+2,svg,矢量图;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

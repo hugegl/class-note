@@ -1,0 +1,87 @@
+一,插件功能
+  1,mui模态框
+    1)书写结构mui.confirm('messge','title',[btnValue],callback,type)
+    2)参数详解:    
+        message:提示对话框上显示的内容,字符串形式
+        title:提示对话框上显示的标题,字符串形式;可以解析html标签;
+                //注意,如果有换行的空文本节点(\n换行标记),mui会自动解析成<br>,就换行了;
+                //
+        btnValue:提示对话框上按钮显示的内容,数组形式
+        callback:提示对话框上关闭后的回调函数,函数形式
+        function(e){
+          //e事件对象
+          e.index//获取点击按钮的索引0是取消,1是确认;实时打印看点击的是哪一个
+        }
+        type:是否使用h5绘制的对话框;
+  2,mui.toast('message',options);
+  参数详解:
+        message:消息框显示的文字内容,必传;
+        options: {对象};//提示消息的参数,选传;
+        对象内的值: 
+        duration    持续显示时间,默认值 short(2000ms);//字符串long(3500ms),short(2000ms)//数字
+        type        强制使用mui消息框(div模式);默认'div';
+              eg:    mui.toast('登陆成功',{ duration:'long', type:'div' }) 
+二,页面与页面之间传参
+        1)地址栏传参;用于临时传参
+            ?key=value&name=pp..... 
+            location.href;返回地址栏所有的数据
+            location.search;返回地址栏中?以及后面的参数
+            decodeURI(location.search);对中文进行解析;
+        2)本地存储
+
+
+
+
+
+
+
+
+
+
+
+
+引申
+1,<script type="">  type的类型template/text/html.....
+2,a标签内href的参数
+    1)写JavaScript:;就是什么都不做;
+    2)history.back();history.go(-1);返回上一页;
+        写法:  href="JavaScript:history.go(-1);" 
+3,web/本地存储的区别和特点
+从大小,生命周期,是否携带分析;写js代码进行操作
+    1)localStorage     IE里面1M,不同浏览器不一样
+      主流浏览器大小5M,请求不会携带,生命周期不手动删除,永久存储,多个窗口之间可以共享;
+    2)sessionStorage   IE里面1M,不同浏览器不一样
+      主流浏览器大小5M,请求不会携带,生命周期会话级别,多个窗口之间不能共享;
+    3)cookie
+      大小4k,请求会携带在请求头中,生命周期可以设置,默认是会话级别;
+      作用:一般用于实现用户登录模块,进行会话保持,可以存sessionId;
+4,localStorage操作的api;
+    1)设置
+      localStorage.setItem('名','值');
+    2)获取
+      localStorage.getItem('名');//如果获取的值不存在返回null;
+    3)删除
+      localStorage.removeItem('名');
+    4)清空所有,慎用;
+      localStorage.clear();
+    存储的格式:默认调用      数据.tostring;的方法
+    默认是字符串类型;
+    1)普通数据类型直接转成字符串;
+    2)复杂数据类型:  如果使用默认的方法数据会丢失
+      需要手动转换成json字符串,再进行存储;读取出来的json字符串转成对象/数组再使用;                                                                                                                                                                                                                                                                       
+      js方法   数组/对象转JSON      JSON.stringify(对象/数组);   作用,将复杂数据类型转成json字符串
+              JSON转数组/对象      JSON.parse(json字符串)
+5, 综合替换:  splice()
+  数组.splice(开始下标,删除几个,添加项1,添加项2,.....);特征会改变原数组;
+  应用场景:
+        添加:    数组.splice(开始下标,0,添加项)  //结果,添加的项的下标最后会变成开始的下标;
+        删除:     数组.splice(开始下标,1)      //从哪里开始,删除一个;
+6,查找:  indexOf()
+  数组.indexOf(元素);//在数组中查找元素第一次出现的位置
+  如果有,返回对应下标;如果没有,返回-1;
+7,截取:   slice()
+  字符串.slice(star,end)   star开始,end结束,包括star,不包括end;如果不写结束,就默认至最后一个;
+8,切割转换  split 字符串转化为数组, 和数组的join相反
+  字符串.split('-')    按'-'来切割
+9,对象中[]和.语法;
+  []语法会解析变量,.语法不会解析变量;

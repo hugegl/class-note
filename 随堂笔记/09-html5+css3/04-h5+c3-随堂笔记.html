@@ -1,0 +1,171 @@
+-----------------------------------------------昨日复习-------------------------------------------
+一,3D案例进阶
+	1,3d导航
+	2,切割轮播图
+		进行长方体布局,4个面
+		完成上一页和下一页布局
+		让ul绕x轴转,完成轮播效果
+		给ul设宽20%,一行5个ul
+		遍历ul让每个ul转,设置延迟
+		transitionend-监听transition动画结束时间,利用transition添加节流阀
+	3,纸张效果
+	4,3D相册
+二,动画
+	1,使用步骤
+		声明动画:  @keyframes 动画名称{....}
+		使用动画:   animation 动画名称 动画时间.....
+	2,声明动画注意点
+		from to 可以设置两个状态,开始状态和结束状态
+		如果有复杂动画,有多个状态,可以设置百分比,百分比是整个时间轴;
+三,动画八大属性
+	animation-name:动画名称
+	animation-duration:动画时间
+	animation-iteration-count:动画次数;infinite无限次;
+	animation-timing-function:动画效果;linear ease steps(几次);
+	animation-direction:动画方向;normal 从from到to;alternate 交替执行,从from到to,再从to到from
+	animation-delay:动画延时
+	animation-fill-mode:动画最终状态;forwards动画结束在最终状态
+	animation-play-state:动画状态;pasued 让动画暂停;
+四,动画合写没有顺序要求,只要求延迟时间写在动画时间的后面;
+五,动画案例进阶
+	发廊效果
+	无缝轮播
+	小于动画
+六,动画函数
+	animate.css动画函数库的使用
+	1,自己使用里面封装好的动画
+	2,使用类名添加动画;
+		animated设置动画时间,并且让动画停留在最终状态
+		具体添加动画类;指定动画名称;
+七,字体图标
+	特点:
+		1)任意放大不失真
+		2)随意修改颜色
+	字体图标库,离线文件,font-awesome
+		使用步骤:1)添加字体类,fa
+				2)添加具体图标类名,fa-glass
+--------------------------------------------------------今日内容----------------------------------------------------
+一,弹性布局(伸缩布局)
+定义:flex是flexble box的缩写,弹性盒子,伸缩盒子;
+display属性是用来设置元素的显示模式;
+值:  none 隐藏
+	block 块级元素;独占一整行,可设置宽高
+	inline 行内元素;一行可以显示多个,可设置宽高;
+	inline-block 行内块;一行可以显示多个,宽高由内容撑开,不可设宽高;
+	flex 让盒子变成一个伸缩盒模型;
+设置了display:flex的盒子,就是弹性盒子;就拥有了主轴和侧轴的概念;设置给父盒子;
+内部的子盒子,默认在主轴方向从左往右布局;
+1,初体验:
+设置主轴的对齐方式:
+	justify-content:值;
+	值: space-between;均匀分配;
+		space-around;自动分配;每个子盒子左右都环绕一些;
+设置侧轴的对齐方式:
+	align-items:值;
+	值:center;居中;
+		flex-end;居底;
+2,主轴和侧轴;
+默认主轴水平往右,侧轴垂直往下,盒子在主轴方向从左往右进行排布;
+主轴和侧轴的圆心是不变的,主轴和侧轴是90度;
+主轴方向: flex-direction:参数;
+			参数:1)row;水平向右;默认值;
+				2)column 主轴垂直往下;
+				3)row-reverse 主轴方向水平向左;
+				4)column-reverse 主轴方向垂直往上;
+主轴对齐方式: justify-content:参数;
+			参数:1)flex-start;往主轴开始方向对齐;默认值;(左对齐)
+				2)flex-end;往主轴结束方向对齐;(右对齐)
+				3)center;居中对齐;
+				4)space-around;让盒子在主轴方向平均分布
+				5)space-between;让盒子进行平均分布,两端不留间隙;
+侧轴对齐方式:
+		algin-items:参数;控制单行的对齐方式
+			参数:1)flex-start;往侧轴开始方向对齐;默认值;(顶对齐);
+				2)flex-end;往侧轴结束方向对齐;(底对齐);
+				3)center;居中对齐;
+				4)stretch;让盒子在侧轴方向拉伸到和父盒子一样高,相当于height:100%;盒子不能设置高;
+		algin-content:参数;控制多行的对齐方式;
+			参数:1)flex-start;往侧轴开始方向对齐;(顶对齐);
+				2)flex-end;往侧轴结束方向对齐;(底对齐);
+				3)center;居中对齐;
+				4)space-around;让盒子在侧轴方向平均分布
+				5)space-between;让盒子进行平均分布,两端不留间隙;
+				6)stretch;拉伸,一般不用;
+3,控制盒子换行
+属性:flex-warp:参数;
+	参数:warp;换行,多行布局;
+		nowarp;不换行;默认值
+	默认不换行,在一行内显示,如果子元素内容溢出,会压缩子盒子的宽度;
+4,给子元素设置的样式:
+	1)按份数分配主轴的剩余空间,配置了指定宽度的子盒子之后,再分配剩余的空间;
+		属性:  flex:值;
+		值:数字;只当前这个资源占总盒子的大小,1;一份的意思;有几个子元素就按设定的值分配父盒子的空间;
+	2)控制子元素的排布顺序
+		属性: order:值;
+		值:数字;默认是0;数值越小排列越靠前;给子元素设置数字,按照设定的数字排列;
+	3)控制自己在侧轴的对齐方式;
+		属性:  algin-self:参数;
+		参数和algin-items一样;区别在这是给子元素自己设置的;
+		参数:flex-start;
+			flex-end;
+			center;
+			stertch;
+二,鼠标滚轮的事件
+mousewheel可以监听鼠标滚轮的滚动;
+事件对象.wheelDelta 正值   是往上滚; 负值   是往下滚动;
+
+
+
+
+
+
+
+
+
+参数整理:
+1,控制主轴方向:  flex-direction:row/column;
+2,控制主轴对齐方式 justify-content:flex-start/flex-end/center/space-between/space-around;
+3,控制侧轴对齐方式:
+	控制单行对齐方式:algin-items:flex-start/flex-end/center/stretch;
+	控制多行对齐方式:algin-content:flex-start/flex-end/center/space-between/space-around/stretch;
+4,换行: flex-warp:warp换行/nowarp默认值不换行;
+案例知识点:
+1,最大宽度: max-width:640px;
+2,最小宽度:min-width:320px;
+3,img默认是基线对齐,底部会留白;
+	方法一,修改对齐方式:
+		vertical-algin:middle/bottom/top;
+	方法二:转块级元素:
+		也可以用display:block;块级元素对基线对齐那个方式什么的无感;
+4,display:flex;可以嵌套;大父级中用了flex;里面的子元素内也可以使用;
+5,fullpage插件;全屏切换的插件;
+	步骤:引包;准备结构;进行初始化;
+	section类表示一屏;每个session表示一屏,默认显示一屏;测试的时候,在对应的那个屏上加上active类,默认打开在那个屏;
+	初始化:
+	$('session们的父元素').fullpage();初始化;
+	配置颜色
+	$('session们的父元素').fullpage(function(){
+	sectionsColor:['颜色','颜色'],//配置每一页的颜色;
+	verticalCentered:false,//每一屏的内容排列方式,是否垂直排列?默认是true;
+	navigation:true,//是否显示导航?默认是false,不显示;	
+	afterLoad:function(a,index){
+	函数体,//滚动结束,到达某一屏触发
+	index,//当前屏的索引从1开始算;
+	},
+	});
+6,opactiy:透明度;0透明,1不透明;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
